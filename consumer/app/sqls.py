@@ -61,7 +61,7 @@ VALUES (%s, %s,%s, %s,%s, %s,%s, %s,%s, %s,%s, %s, %s,%s)
 
 def create_sql_orders():
     return """INSERT INTO orders
-        (type, orderNumber, orderDate, requiredDate, shippedDate, status, comments)
+        (type, orderNumber, orderDate, requiredDate, shippedDate, status, comments, customerNumber)
         VALUES (%s, %s,%s, %s,%s, %s,%s,%s)
         """
 
