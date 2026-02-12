@@ -48,7 +48,7 @@ services:
       KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
 
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
 
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
@@ -65,51 +65,52 @@ services:
       start_period: 40s
 
 
-  analytics-api:
-    container_name: analytics-api
-    build: ./analytics-api
-    environment:
-      MYSQL_HOST: mysql
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-      MYSQL_DB: test_week_17
-    ports:
-      - "8080:8080"
-    depends_on:
-      mysql:
-        condition: service_healthy
+#   # analytics-api:
+#   #   container_name: analytics-api
+#   #   build: ./analytics-api
+#   #   environment:
+#   #     MYSQL_HOST: mysql
+#   #     MYSQL_USER: root
+#   #     MYSQL_PASSWORD: root
+#   #     MYSQL_DB: test_week_17
+#   #   ports:
+#   #     - "8080:8080"
+#   #   depends_on:
+#   #     mysql:
+#   #       condition: service_healthy
 
 
-  producer:
-    container_name: producer
-    build: ./producer
-    environment:
-      MONGO_HOST: mongodb://mongodb:27017
-      BOOTSTRAP_SERVERS: "kafka:9092"
-      DB_NAME: "test_week_17"
-    depends_on:
-      mongodb:
-        condition: service_healthy
-      kafka:
-        condition: service_healthy
-
-  consumer:
-    container_name: consumer
-    build: ./consumer
-    environment:
-      BOOTSTRAP_SERVERS: "kafka:9092"
-      MYSQL_HOST: mysql
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-      MYSQL_DB: test_week_17
-    depends_on:
-      mysql:
-        condition: service_healthy
-      kafka:
-        condition: service_healthy
+#   # producer:
+#   #   container_name: producer
+#   #   build: ./producer
+#   #   environment:
+#   #     MONGO_HOST: mongodb://mongodb:27017
+#   #     BOOTSTRAP_SERVERS: "kafka:9092"
+#   #     DB_NAME: "test_week_17"
+#   #   depends_on:
+#   #     mongodb:
+#   #       condition: service_healthy
+#   #     kafka:
+#   #       condition: service_healthy
 
 
-volumes:
-  kafka_data:
-  mongodb_data:
-  mysql_data:
+#   # consumer:
+#   #   container_name: consumer
+#   #   build: ./consumer
+#   #   environment:
+#   #     BOOTSTRAP_SERVERS: "kafka:9092"
+#   #     MYSQL_HOST: mysql
+#   #     MYSQL_USER: root
+#   #     MYSQL_PASSWORD: root
+#   #     MYSQL_DB: test_week_17
+#   #   depends_on:
+#   #     mysql:
+#   #       condition: service_healthy
+#   #     kafka:
+#   #       condition: service_healthy
+
+
+# volumes:
+#   kafka_data:
+#   mongodb_data:
+#   mysql_data:
