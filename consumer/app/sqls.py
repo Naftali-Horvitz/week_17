@@ -7,6 +7,7 @@ mycursor = mydb.cursor()
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+
 def create_customer_table():
     return """
     CREATE TABLE IF NOT EXISTS customers 
@@ -28,6 +29,7 @@ def create_customer_table():
         )
     """
 
+
 def create_order_table():
     return """
     CREATE TABLE IF NOT EXISTS orders 
@@ -43,23 +45,26 @@ def create_order_table():
         )
         """
 
+
 def create_sql_customers():
     return """
 INSERT INTO customers 
-(type, orderNumber, orderDate, requiredDate, shippedDate, status, comments)
-VALUES (%s, %s,%s, %s,%s, %s,%s, %s,%s, %s,%s, %s, %s,%s)
-"""
-
-def create_sql_orders():
-    return """INSERT INTO orders
         (
         type, customerNumber, customerName, contactLastName, contactFirstName,
         phone, addressLine1, addressLine2, city, state, postalCode, country,
         salesRepEmployeeNumber 
         creditLimit
         )
-        VALUES (%s, %s,%s, %s,%s, %s,%s,%s, %s,%s, %s,%s, %s,%s)
+VALUES (%s, %s,%s, %s,%s, %s,%s, %s,%s, %s,%s, %s, %s,%s)
+"""
+
+
+def create_sql_orders():
+    return """INSERT INTO orders
+        (type, orderNumber, orderDate, requiredDate, shippedDate, status, comments)
+        VALUES (%s, %s,%s, %s,%s, %s,%s,%s)
         """
+
 
 def create_val_(item: dict):
     values = []
@@ -67,15 +72,16 @@ def create_val_(item: dict):
         values.append(v)
     return tuple(values)
 
+
 def insert_item(item):
     my_conn = get_conn()
     cursor = my_conn.cursor()
-    
+
     if item["type"] == "order":
         sql = create_sql_orders()
     else:
         sql = create_sql_customers()
-        
+
     value = create_val_(item)
 
     cursor.execute(sql, value)
